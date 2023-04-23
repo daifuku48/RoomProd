@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.danylkharytonovuaa.roommvvmprod.R
 
-class RecyclerStudentAdapter : RecyclerView.Adapter<RecyclerStudentAdapter.ViewHolder>() {
+class RecyclerStudentAdapter() : RecyclerView.Adapter<RecyclerStudentAdapter.ViewHolder>() {
 
     private var array : ArrayList<Student> = ArrayList()
 
