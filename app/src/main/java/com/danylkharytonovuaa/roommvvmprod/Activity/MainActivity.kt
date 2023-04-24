@@ -1,26 +1,23 @@
 package com.danylkharytonovuaa.roommvvmprod.Activity
 
-import android.R
-import android.content.DialogInterface
+import android.app.Dialog
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Room
 import com.danylkharytonovuaa.roommvvmprod.Data.StudentDataBase
 import com.danylkharytonovuaa.roommvvmprod.Model.RecyclerStudentAdapter
 import com.danylkharytonovuaa.roommvvmprod.Model.Student
+import com.danylkharytonovuaa.roommvvmprod.R
 import com.danylkharytonovuaa.roommvvmprod.ViewModel.MainViewModel
 import com.danylkharytonovuaa.roommvvmprod.ViewModel.MainViewModelFactory
 import com.danylkharytonovuaa.roommvvmprod.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,13 +33,9 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding?.recyclerView?.layoutManager = layoutManager
 
-        studentDataBase = Room.databaseBuilder(this, StudentDataBase::class.java, "student_database")
-            .allowMainThreadQueries()
-            .build()
-
+        val dialog = Dialog(this)
         val array = ArrayList<Student>()
 
-        array.addAll(studentDataBase.studentDAO().getAll())
 
         binding?.recyclerView?.adapter = recyclerAdapter
 
@@ -51,9 +44,26 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getStudentLiveData()?.observe(this, studentListUpdateObserver)
 
-
-
+        binding?.floatActionButton?.setOnClickListener {
+            showDialog()
+        }
     }
+
+    private fun showDialog()
+    {
+        val builder = AlertDialog.Builder(this)
+        val viewGroup : ViewGroup = findViewById(android.R.id.content);
+        val view = LayoutInflater.from(this).inflate(R.layout.layout_add_student, viewGroup, false)
+        builder.setView(view)
+        val alertDialog = builder.create()
+        val btn = findViewById<Button>(R.id.add_button1)
+        btn.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+
 
     private var studentListUpdateObserver : Observer<ArrayList<Student>> =
         Observer<ArrayList<Student>>{
