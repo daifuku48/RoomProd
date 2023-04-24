@@ -7,29 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.danylkharytonovuaa.roommvvmprod.R
 
-class RecyclerStudentAdapter() : RecyclerView.Adapter<RecyclerStudentAdapter.ViewHolder>() {
-
-    private var array : ArrayList<Student> = ArrayList()
-
-    fun updateArrayList(array: ArrayList<Student>)
-    {
-        this.array.clear()
-        this.array = array
-        notifyDataSetChanged()
-    }
-
-    fun updateItem(item: Student)
-    {
-        for (i in 0..array.size)
-        {
-            if (array[i].uId == item.uId)
-            {
-                array[i] = item
-                notifyItemChanged(i)
-                break
-            }
-        }
-    }
+class RecyclerStudentAdapter(private var array : ArrayList<Student>) : RecyclerView.Adapter<RecyclerStudentAdapter.ViewHolder>() {
 
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view)
